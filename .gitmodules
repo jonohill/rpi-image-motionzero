@@ -1,0 +1,3 @@
+[submodule "rpi-config-scripts"]
+	path = packer
+	url = git@github.com:jonohill/rpi-packer.git
