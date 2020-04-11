@@ -21,6 +21,13 @@ jobs:
         key: packer_cache
         restore-keys: packer_cache
 
+    - name: Docker Login
+      uses: Azure/docker-login@v1
+      with:
+        login-server: docker.pkg.github.com
+        username: jonohill
+        password: ${{ secrets.GITHUB_TOKEN }}
+
     - name: build
       run: packer/build base.json
 
