@@ -1,0 +1,9 @@
+{
+    "variables": {
+        "base_image": "http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip",
+        "script_dir": "install",
+        "image_name": "base",
+        "mz_version": "wip",
+        "massstorage_size": ""
+    }
+}

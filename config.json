@@ -1,0 +1,12 @@
+{
+    "variables": {
+        "base_image": "./base.img.gz",
+        "script_dir": "config",
+        "image_name": "final",
+        "ssh_ca_key": "",
+        "ssh_key": "",
+        "wifi_ssid": "",
+        "wifi_password": ""
+    },
+    "sensitive-variables": [ "wifi_password", "ssh_ca_key" ]
+}
