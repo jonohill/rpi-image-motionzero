@@ -25,14 +25,11 @@ jobs:
       uses: Azure/docker-login@v1
       with:
         login-server: docker.pkg.github.com
-        username: jonohill
+        username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: build
       run: packer/build base.json
-
-    - name: short_sha
-      run: export SHORT_SHA=${GITHUB_SHA::7}
 
     - name: release
       id: release
@@ -40,8 +37,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.SHORT_SHA }}
-        release_name: ${{ env.SHORT_SHA }}
+        tag_name: v${{ github.run_number }}
+        release_name: v${{ github.run_number }}
         draft: true
 
     - name: upload_image
