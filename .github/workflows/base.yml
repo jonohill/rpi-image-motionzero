@@ -1,0 +1,58 @@
+name: Packer Build
+
+on:
+  push: {}
+    # branches: [ master ]
+  pull_request: {}
+    # branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - uses: actions/cache@v1
+      with:
+        path: packer_cache
+        key: packer_cache
+        restore-keys: packer_cache
+
+    - name: build
+      run: packer/build base.json
+
+    - name: short_sha
+      run: export SHORT_SHA=${GITHUB_SHA::7}
+
+    - name: release
+      id: release
+      uses: actions/create_release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.SHORT_SHA }}
+        release_name: ${{ env.SHORT_SHA }}
+        draft: true
+
+    - name: upload_image
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.release.outputs.upload_url }}
+        asset_path: ./final.img.gz
+        asset_name: final.img.gz
+        asset_content_type: application/gzip
+
+    - name: upload_sha
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.release.outputs.upload_url }}
+        asset_path: ./final.img.gz.sha256
+        asset_name: final.img.gz.sha256
+        asset_content_type: text/plain
