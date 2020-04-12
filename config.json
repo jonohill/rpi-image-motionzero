@@ -1,6 +1,6 @@
 {
     "variables": {
-        "base_image": "./base.img.gz",
+        "base_image": "https://github.com/jonohill/rpi-image-motionzero/releases/latest/download/base.img.gz",
         "script_dir": "config",
         "image_name": "final",
         "ssh_ca_key": "",
