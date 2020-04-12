@@ -1,10 +1,8 @@
-name: Packer Build
+name: build_base
 
 on:
-  push: {}
-    # branches: [ master ]
-  pull_request: {}
-    # branches: [ master ]
+  push:
+    branches: [ master ]
 
 jobs:
   build:
@@ -40,7 +38,6 @@ jobs:
       with:
         tag_name: v${{ github.run_number }}
         release_name: v${{ github.run_number }}
-        draft: true
 
     - name: upload_image
       uses: actions/upload-release-asset@v1
