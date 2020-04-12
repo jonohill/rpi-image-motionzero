@@ -18,8 +18,7 @@ jobs:
     - uses: actions/cache@v1
       with:
         path: packer_cache
-        key: packer_cache
-        restore-keys: packer_cache
+        key: packer_cache_${{ hashFiles('base.json') }}
 
     - name: Docker Login
       uses: Azure/docker-login@v1
