@@ -29,7 +29,9 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: build
-      run: packer/build base.json
+      run: |
+        packer/build base.json
+        sudo chown -R $(whoami) packer_cache
 
     - name: release
       id: release
