@@ -1,0 +1,60 @@
+name: build_base
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - uses: actions/cache@v1
+      with:
+        path: packer_cache
+        key: packer_cache_${{ hashFiles('base.json') }}
+
+    - name: Docker Login
+      uses: Azure/docker-login@v1
+      with:
+        login-server: docker.pkg.github.com
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: build
+      run: |
+        packer/build base.json
+        sudo chown -R $(whoami) packer_cache
+
+    - name: release
+      id: release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ github.run_number }}
+        release_name: v${{ github.run_number }}
+
+    - name: upload_image
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.release.outputs.upload_url }}
+        asset_path: ./base.img.gz
+        asset_name: base.img.gz
+        asset_content_type: application/gzip
+
+    - name: upload_sha
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.release.outputs.upload_url }}
+        asset_path: ./base.img.gz.sha256
+        asset_name: base.img.gz.sha256
+        asset_content_type: text/plain
