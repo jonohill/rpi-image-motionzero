@@ -17,11 +17,9 @@ mv /tmp/rpizero-arlo/sender /opt/motionzero
 
 cd /opt/motionzero
 chown -R pi:pi /opt/motionzero
-su pi
-pip3 install -r requirements.txt
-exit
+sudo -u pi pip3 install -r requirements.txt
 
-mkdir -p /etc/motionzero
+mkdir /etc/motionzero
 touch /etc/motionzero/env
 
 cat >/etc/systemd/system/motionzero.service <<EOF

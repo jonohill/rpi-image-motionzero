@@ -6,7 +6,9 @@
         "ssh_ca_key": "",
         "ssh_key": "",
         "wifi_ssid": "",
-        "wifi_password": ""
+        "wifi_password": "",
+        "mz_key": "",
+        "mz_url": ""
     },
-    "sensitive-variables": [ "wifi_password", "ssh_ca_key" ]
+    "sensitive-variables": [ "wifi_password", "ssh_ca_key", "mz_key" ]
 }
