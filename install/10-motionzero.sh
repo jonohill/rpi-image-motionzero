@@ -21,6 +21,8 @@ su pi
 pip3 install -r requirements.txt
 exit
 
+touch /etc/motionzero/env
+
 cat >/etc/systemd/system/motionzero.service <<EOF
 
 [Unit]
@@ -28,8 +30,9 @@ Description=MotionZero
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/python3 -u main.py
+ExecStart=/opt/motionzero/run.sh
 WorkingDirectory=/opt/motionzero
+EnvironmentFile=/etc/motionzero/env
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
