@@ -21,6 +21,7 @@ su pi
 pip3 install -r requirements.txt
 exit
 
+mkdir -p /etc/motionzero
 touch /etc/motionzero/env
 
 cat >/etc/systemd/system/motionzero.service <<EOF
