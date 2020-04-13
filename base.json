@@ -4,6 +4,6 @@
         "script_dir": "install",
         "image_name": "base",
         "mz_version": "wip",
-        "massstorage_size": ""
+        "massstorage_size": "17179869184"
     }
 }
