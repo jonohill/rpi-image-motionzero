@@ -6,6 +6,7 @@ set -e
 
 apt-get update
 apt-get install -y \
+    ffmpeg \
     git \
     python3-pip
 
@@ -14,10 +15,11 @@ git clone https://github.com/jonohill/rpizero-arlo
 cd rpizero-arlo
 git checkout "$MZ_VERSION"
 mv /tmp/rpizero-arlo/sender /opt/motionzero
+mkdir /tmp/piusb
 
 cd /opt/motionzero
 chown -R pi:pi /opt/motionzero
-sudo -u pi pip3 install -r requirements.txt
+pip3 install -r requirements.txt
 
 mkdir /etc/motionzero
 touch /etc/motionzero/env
@@ -35,7 +37,6 @@ EnvironmentFile=/etc/motionzero/env
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
-User=pi
 
 [Install]
 WantedBy=multi-user.target
