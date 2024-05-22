@@ -19,7 +19,7 @@ jobs:
         key: packer_cache_${{ hashFiles('base.json') }}
 
     - name: Docker Login
-      uses: Azure/docker-login@v1
+      uses: Azure/docker-login@v2
       with:
         login-server: docker.pkg.github.com
         username: ${{ github.actor }}
